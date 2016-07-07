@@ -11,6 +11,8 @@ from numpy.testing import (assert_almost_equal, assert_array_almost_equal,
                            assert_array_less, assert_equal)
 
 from nilearn.mass_univariate import permuted_ols
+from nilearn.mass_univariate.utils import (
+    t_score_with_covars_and_normalized_design, orthonormalize_matrix)
 
 
 def get_tvalue_with_alternative_library(tested_vars, target_vars, covars=None):
@@ -99,7 +101,7 @@ def test_t_score_with_covars_and_normalized_design_nocovar(random_state=0):
     var2 = rng.randn(n_samples, 1)
     var2 = var2 / np.sqrt(np.sum(var2 ** 2, 0))  # normalize
     # compute t-scores with nilearn routine
-    t_val_own = _t_score_with_covars_and_normalized_design(var1, var2)
+    t_val_own = t_score_with_covars_and_normalized_design(var1, var2)
     # compute t-scores with linalg or statsmodels
     t_val_alt = get_tvalue_with_alternative_library(var1, var2)
     assert_array_almost_equal(t_val_own, t_val_alt)
@@ -121,7 +123,7 @@ def test_t_score_with_covars_and_normalized_design_withcovar(random_state=0):
     covars[3] = -1  # covars is orthogonal to var1
     covars = orthonormalize_matrix(covars)
     # nilearn t-score
-    own_score = _t_score_with_covars_and_normalized_design(var1, var2, covars)
+    own_score = t_score_with_covars_and_normalized_design(var1, var2, covars)
     # compute t-scores with linalg or statmodels
     ref_score = get_tvalue_with_alternative_library(var1, var2, covars)
     assert_array_almost_equal(own_score, ref_score)
