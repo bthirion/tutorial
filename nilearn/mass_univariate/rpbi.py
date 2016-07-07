@@ -831,7 +831,7 @@ def randomized_parcellation_based_inference(
     ### Build parcellations
     mask = np.asarray(mask).astype(bool)
     if verbose:
-        print "Build parcellations"
+        print("Build parcellations")
     parcelled_imaging_vars, parcellations_labels = _build_parcellations(
         imaging_vars, mask,
         n_parcellations=n_parcellations, n_parcels=n_parcels,
@@ -840,7 +840,7 @@ def randomized_parcellation_based_inference(
 
     ### Statistical inference
     if verbose:
-        print "Statistical inference"
+        print("Statistical inference")
     neg_log_pvals, counting_stats_original_data, h0 = rpbi_core(
         tested_var, parcelled_imaging_vars,
         n_parcellations, parcellations_labels, n_parcels,
