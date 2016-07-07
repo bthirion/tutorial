@@ -217,11 +217,12 @@ def _ward_fit_transform(all_subjects_data, fit_samples_indices,
     # variable". Note this is dependent on the order of import,
     # whichever comes first has the only shot at setting the
     # matplotlib backend.
-    from sklearn.cluster import WardAgglomeration
+    from sklearn.cluster import FeatureAgglomeration
 
     # fit part
     data_fit = all_subjects_data[fit_samples_indices]
-    ward = WardAgglomeration(n_clusters=n_parcels, connectivity=connectivity)
+    ward = FeatureAgglomeration(n_clusters=n_parcels,
+                                connectivity=connectivity)
     ward.fit(data_fit)
     # transform part
     labels = ward.labels_ + offset_labels  # unique labels across parcellations
@@ -286,7 +287,7 @@ def _build_parcellations(all_subjects_data, mask, n_parcellations=100,
 
     TODO
     ----
-    - Deal with NaNs in the original data (WardAgglomeration cannot fit
+    - Deal with NaNs in the original data (FeatureAgglomeration cannot fit
       when NaNs are present in the data). Median imputation?
 
     """
