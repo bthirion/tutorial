@@ -17,6 +17,7 @@ HIGHLIGHTS
   :class:`nilearn.decoding.FREMRegressor` (for regression) extend the decoder
   object with one fast clustering step at the beginning and  aggregates a high number of estimators trained on various splits of the training set.
 
+
 - New plotting functions:
 
   * :func:`nilearn.plotting.plot_event` to visualize events file.
