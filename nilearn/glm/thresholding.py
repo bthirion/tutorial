@@ -104,7 +104,7 @@ def fdr_threshold(z_vals, alpha):
 def cluster_level_inference(stat_img, mask_img=None,
                             threshold=3., alpha=.05, verbose=False):
     """ Report the proportion of active voxels for all clusters
-    defined by the input threshold.
+    defined by the input thresholds.
 
     Parameters
     ----------
@@ -137,6 +137,12 @@ def cluster_level_inference(stat_img, mask_img=None,
     Inference for brain imaging. Neuroimage. 2018 Nov 1;181:786-796. doi:
     10.1016/j.neuroimage.2018.07.060
 
+    When multiple thresholds are provided, the trur discovery proportion (tdp)
+    for clusters corresponding to higher thresholds override the tdp values
+    for clusters corresponding to lower thresholds.
+    As this behavior can be counterintuitive, we suggest to use a 
+    single threshold to better interpret the tdps.
+
     This function is experimental. 
     It may change in any future release of Nilearn.
     """
@@ -165,8 +171,9 @@ def cluster_level_inference(stat_img, mask_img=None,
         for label_ in range(1, n_labels + 1):
             # get the z-vals in the cluster
             cluster_vals = stats[labels == label_]
-            proportion = _true_positive_fraction(cluster_vals, hommel_value,
-                                                 alpha)
+            proportion = _true_positive_fraction(
+                cluster_vals, hommel_value, alpha)
+            print(threshold_, np.sum(labels == label_), proportion, hommel_value)
             proportion_true_discoveries[labels == label_] = proportion
 
     proportion_true_discoveries_img = masker.inverse_transform(

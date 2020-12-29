@@ -83,7 +83,7 @@ print("Ward agglomeration 1000 clusters: %.2fs" % (time.time() - start))
 
 # We initialize class again with n_parcels=2000 this time.
 start = time.time()
-ward = Parcellations(method='ward', n_parcels=2000,
+ward = Parcellations(method='ward', n_parcels=200,
                      standardize=False, smoothing_fwhm=2.,
                      memory='nilearn_cache', memory_level=1,
                      verbose=1)
